@@ -9,25 +9,45 @@ const TaskList = props => {
   };
 
   this.editTask = index => {
-      console.log(index)
     props.onEdit(index)
   }
-  console.log(props);
+
+  this.saveTask = index => {
+    props.onSave(index)
+  }
+
+  this.toggleTask = index => {
+    props.onToggle(index)
+  }
+
+  this.showAll = () => {
+    props.showAll(props.tasks)
+  }
+  this.showCompleted = () => {
+    props.showCompleted(props.tasks)
+  }
+  this.showUncompleted = () => {
+    props.showUncompleted(props.tasks)
+  }
   return (
       
-    <CardBody>
+    <CardBody className="todo__list">
       <CardTitle>My todo list</CardTitle>
       {props.tasks.map(task => (
         <Task
           onDelete={this.deleteTask}
-          id={task.id}
           key={task.id}
-          taskName={task.title}
-          editable={task.editable}
+          task={task}
           onEdit={this.editTask}
+          onSave={this.saveTask}
+          onToggle={this.toggleTask}
         />
       ))}
-      <Button>Button</Button>
+      <div className="d-flex justify-content-around">
+        <Button outline={props.filter !== 'SHOW_ALL' ? true : false} onClick={this.showAll} color="primary">Show all</Button>
+        <Button outline={props.filter !== 'SHOW_COMPLETED' ? true : false} onClick={this.showCompleted} color="success">Show completed</Button>
+        <Button outline={props.filter !== 'SHOW_UNCOMPLETED' ? true : false} onClick={this.showUncompleted} color="danger">Show uncompleted</Button>
+      </div>
     </CardBody>
   );
 };

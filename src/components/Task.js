@@ -1,34 +1,49 @@
 import React from "react";
-import { Alert } from "reactstrap";
+import { Alert, Label, Input } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faSave } from "@fortawesome/free-solid-svg-icons";
 
 import "./Task.scss";
 
-const Task = props => (
-  <div>
-    <Alert
-      contentEditable={props.editable}
-      color="dark"
-      className="d-flex justify-content-between"
-    >
-      {props.taskName}
-      <div className="todo__controls">
-        <FontAwesomeIcon
-          onClick={() => {
-            props.onEdit(props.id);
-          }}
-          icon={faEdit}
-        />
-        <FontAwesomeIcon
-          onClick={() => {
-            props.onDelete(props.id);
-          }}
-          icon={faTrashAlt}
-        />
-      </div>
-    </Alert>
-  </div>
-);
+const Task = props => {
+  // console.log(props.task)
+  return (
+    <div>
+      <Alert
+        contentEditable={props.task.editable}
+        color={props.task.complited ? "success" : "danger"}
+        className={
+          props.task.visible ? " d-flex justify-content-between " : "d-none"
+        }
+      >
+        {props.task.title}
+        <div className="todo__controls">
+          <Label check>
+            <Input
+              type="checkbox"
+              onChange={() => props.onToggle(props.task.id)}
+              checked={props.task.complited}
+            />{" "}
+            {props.task.complited ? "Complete" : "Uncomplete"}
+          </Label>
+          <FontAwesomeIcon
+            onClick={() => {
+              props.task.editable
+                ? props.onSave(props.task.id)
+                : props.onEdit(props.task.id);
+            }}
+            icon={props.task.editable ? faSave : faEdit}
+          />
+          <FontAwesomeIcon
+            onClick={() => {
+              props.onDelete(props.task.id);
+            }}
+            icon={faTrashAlt}
+          />
+        </div>
+      </Alert>
+    </div>
+  );
+};
 
 export default Task;

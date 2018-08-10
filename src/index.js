@@ -6,7 +6,7 @@ import App from "./App";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { todoList, initialState } from "./reducers/reducers";
+import { allReducers } from './reducers/index'
 
 const middlewares = [];
 
@@ -21,7 +21,34 @@ const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 
-const store = createStore(todoList, initialState, enhancer);
+const initialState = {
+  filter: 'SHOW_ALL',
+  todoList: [
+    {
+      id: 1,
+      title: "task1",
+      editable: false,
+      complited: false,
+      visible: true
+    },
+    {
+      id: 2,
+      title: "task2",
+      editable: false,
+      complited: true,
+      visible: true
+    },
+    {
+      id: 3,
+      title: "task3",
+      editable: false,
+      complited: false,
+      visible: true
+    }
+  ]
+};
+
+const store = createStore(allReducers, initialState, enhancer);
 
 ReactDOM.render(
   <Provider store={store}>

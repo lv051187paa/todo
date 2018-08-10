@@ -17,7 +17,7 @@ class InputField extends Component {
   };
 
   addTask = (task, length) => {
-    if (task !== "") this.props.onSubmit(task, length + 1);
+    if (task !== "") this.props.onSubmit(task);
     this.setState({
       ...this.state,
       value: ""
@@ -25,7 +25,6 @@ class InputField extends Component {
   };
 
   render() {
-    // console.log(this.props);
     return (
       <InputGroup>
         <Input
